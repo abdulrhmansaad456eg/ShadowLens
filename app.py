@@ -36,9 +36,9 @@ st.markdown("""
         --accent-primary: #00d4aa;
         --accent-secondary: #06b6d4;
         --accent-glow: rgba(0, 212, 170, 0.3);
-        --text-primary: #f1f5f9;
-        --text-secondary: #94a3b8;
-        --text-muted: #64748b;
+        --text-primary: #ffffff;
+        --text-secondary: #e2e8f0;
+        --text-muted: #94a3b8;
         --success: #10b981;
         --warning: #f59e0b;
         --danger: #ef4444;
@@ -87,16 +87,28 @@ st.markdown("""
     
     h3 {
         font-family: 'Inter', sans-serif !important;
-        font-size: 1.5rem !important;
+        font-size: 1.75rem !important;
         font-weight: 600 !important;
         color: var(--accent-secondary) !important;
         margin-top: 1.5rem !important;
     }
     
     p, li {
-        font-size: 1.05rem !important;
-        line-height: 1.7 !important;
+        font-size: 1.15rem !important;
+        line-height: 1.8 !important;
         color: var(--text-secondary);
+    }
+    
+    /* Increase all text for better readability */
+    .stMarkdown, .stText {
+        font-size: 1.15rem !important;
+    }
+    
+    /* Labels and captions */
+    label, .stSelectbox label, .stTextInput label, .stTextArea label {
+        font-size: 1.1rem !important;
+        font-weight: 600 !important;
+        color: #ffffff !important;
     }
     
     /* Sidebar - Modern Glassmorphism */
@@ -120,59 +132,62 @@ st.markdown("""
         margin-bottom: 0.5rem;
     }
     
-    /* Navigation Radio - Bigger */
-    .stRadio > label {
-        font-size: 1.1rem !important;
-        font-weight: 500 !important;
-        padding: 0.75rem 1rem !important;
-        margin: 0.25rem 0 !important;
-        border-radius: 12px !important;
-        transition: all 0.2s ease !important;
+    /* Remove radio button styling since we use buttons now */
+    .stRadio {
+        display: none !important;
     }
     
-    .stRadio > div[role="radiogroup"] > label {
-        background: var(--bg-tertiary) !important;
-        border: 2px solid transparent !important;
-    }
-    
-    .stRadio > div[role="radiogroup"] > label:hover {
-        background: var(--bg-card) !important;
-        border-color: var(--accent-primary) !important;
-        transform: translateX(4px);
-    }
-    
-    /* Buttons - Modern and bigger */
+    /* Navigation Buttons - Rectangular and big */
     .stButton > button {
-        background: var(--gradient-1) !important;
-        color: white !important;
+        background: #1f2937 !important;
+        color: #ffffff !important;
         font-family: 'Inter', sans-serif !important;
-        font-size: 1.1rem !important;
-        font-weight: 600 !important;
-        padding: 0.875rem 2rem !important;
-        border-radius: 12px !important;
-        border: none !important;
-        box-shadow: 0 4px 15px var(--accent-glow) !important;
-        transition: all 0.3s ease !important;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
+        font-size: 1.25rem !important;
+        font-weight: 700 !important;
+        padding: 1rem 1.5rem !important;
+        border-radius: 8px !important;
+        border: 3px solid #374151 !important;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3) !important;
+        transition: all 0.2s ease !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: 60px !important;
+        text-align: left !important;
+        letter-spacing: 0.5px !important;
     }
     
     .stButton > button:hover {
-        transform: translateY(-2px) !important;
-        box-shadow: 0 8px 25px var(--accent-glow) !important;
-        filter: brightness(1.1) !important;
+        background: #374151 !important;
+        border-color: #00d4aa !important;
+        transform: translateX(5px) !important;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4) !important;
     }
     
     .stButton > button:active {
-        transform: translateY(0) !important;
+        transform: translateX(2px) !important;
     }
     
-    /* Secondary buttons */
-    .stButton > button[kind="secondary"] {
-        background: transparent !important;
-        border: 2px solid var(--accent-primary) !important;
-        color: var(--accent-primary) !important;
-        box-shadow: none !important;
+    /* Primary (Active) buttons */
+    .stButton > button[kind="primary"] {
+        background: linear-gradient(135deg, #00d4aa 0%, #06b6d4 100%) !important;
+        color: #0a0e1a !important;
+        border: 3px solid #00d4aa !important;
+        font-weight: 800 !important;
+        box-shadow: 0 4px 20px rgba(0, 212, 170, 0.5) !important;
+    }
+    
+    .stButton > button[kind="primary"]:hover {
+        filter: brightness(1.1) !important;
+        box-shadow: 0 6px 25px rgba(0, 212, 170, 0.6) !important;
+    }
+    
+    /* Disabled buttons */
+    .stButton > button:disabled {
+        background: #1f2937 !important;
+        color: #64748b !important;
+        border-color: #374151 !important;
+        opacity: 0.6 !important;
+        cursor: not-allowed !important;
     }
     
     /* File uploader - Modern styling */
@@ -417,48 +432,83 @@ def init_session_state():
 
 def render_sidebar():
     """Render the sidebar with navigation and file upload."""
+    
+    # Use session state for page navigation
+    if 'current_page' not in st.session_state:
+        st.session_state.current_page = "📊 Analyze"
+    
     st.sidebar.markdown("""
-    <div style="text-align: center; padding: 2rem 1rem 1.5rem; margin-bottom: 1rem;">
-        <div style="font-size: 3.5rem; margin-bottom: 0.5rem; filter: drop-shadow(0 0 15px rgba(0, 212, 170, 0.5));">🔍</div>
+    <div style="text-align: center; padding: 1.5rem 1rem 1rem; margin-bottom: 0.5rem;">
+        <div style="font-size: 4rem; margin-bottom: 0.5rem; filter: drop-shadow(0 0 20px rgba(0, 212, 170, 0.6));">🔍</div>
         <h1 style="
             font-family: 'Inter', sans-serif;
-            font-size: 2.2rem;
-            font-weight: 800;
+            font-size: 2.5rem;
+            font-weight: 900;
             background: linear-gradient(135deg, #00d4aa 0%, #06b6d4 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin: 0 0 0.5rem 0;
+            margin: 0;
             letter-spacing: -0.02em;
+            line-height: 1.1;
         ">ShadowLens</h1>
-        <p style="color: #64748b; font-size: 1rem; font-weight: 500; margin: 0;">
+        <p style="color: #94a3b8; font-size: 1.1rem; font-weight: 500; margin: 0.5rem 0 0 0;">
             Steganography Suite
         </p>
         <div style="
-            margin-top: 1rem;
-            padding: 0.5rem 1rem;
-            background: rgba(0, 212, 170, 0.1);
-            border: 1px solid rgba(0, 212, 170, 0.3);
-            border-radius: 20px;
+            margin-top: 0.75rem;
+            padding: 0.4rem 1rem;
+            background: rgba(0, 212, 170, 0.15);
+            border: 2px solid rgba(0, 212, 170, 0.4);
+            border-radius: 25px;
             display: inline-block;
         ">
-            <span style="color: #00d4aa; font-size: 0.85rem; font-weight: 600;">v1.0</span>
+            <span style="color: #00d4aa; font-size: 0.9rem; font-weight: 700;">v1.0</span>
         </div>
     </div>
     
-    <hr style="border: none; height: 1px; background: linear-gradient(90deg, transparent, #2d3748, transparent); margin: 1rem 0;">
+    <hr style="border: none; height: 2px; background: linear-gradient(90deg, transparent, #00d4aa, transparent); margin: 1rem 0;">
     
     <div style="padding: 0 0.5rem;">
-        <p style="color: #64748b; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; margin: 0 0 1rem 1rem;">Navigation</p>
+        <p style="color: #64748b; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin: 0 0 1rem 0.5rem;">📍 Navigation</p>
     </div>
     """, unsafe_allow_html=True)
     
-    # Navigation
-    page = st.sidebar.radio(
-        "",
-        ["📊 Analyze", "📝 Hide", "🔓 Extract", "🔬 Bit Planes", "ℹ️ About"],
-        label_visibility="collapsed"
-    )
+    # Navigation buttons - Rectangular big buttons
+    nav_items = ["📊 Analyze", "📝 Hide", "🔓 Extract", "🔬 Bit Planes", "ℹ️ About"]
+    
+    for item in nav_items:
+        is_active = st.session_state.current_page == item
+        
+        # Button styling based on active state
+        if is_active:
+            btn_style = """
+                background: linear-gradient(135deg, #00d4aa 0%, #06b6d4 100%);
+                color: #0a0e1a;
+                border: none;
+                box-shadow: 0 4px 15px rgba(0, 212, 170, 0.4);
+            """
+        else:
+            btn_style = """
+                background: #1f2937;
+                color: #e2e8f0;
+                border: 2px solid #374151;
+                box-shadow: none;
+            """
+        
+        # Create columns for full-width button
+        cols = st.sidebar.columns([1])
+        with cols[0]:
+            if st.button(
+                item,
+                key=f"nav_{item}",
+                use_container_width=True,
+                type="primary" if is_active else "secondary"
+            ):
+                st.session_state.current_page = item
+                st.rerun()
+    
+    page = st.session_state.current_page
     
     st.sidebar.markdown("---")
     
@@ -540,15 +590,15 @@ def render_analyze_page():
     """Render the Analyze page."""
     st.markdown("""
     <div style="margin-bottom: 2rem;">
-        <h1 style="margin: 0; font-size: 3rem;">📊 Steganalysis</h1>
-        <p style="font-size: 1.25rem; color: #94a3b8; margin: 0.5rem 0 0 0; line-height: 1.6;">
+        <h1 style="margin: 0; font-size: 3.5rem; font-weight: 800;">📊 Steganalysis</h1>
+        <p style="font-size: 1.4rem; color: #e2e8f0; margin: 0.75rem 0 0 0; line-height: 1.6;">
             Detect and analyze hidden data using <strong style="color: #00d4aa;">9 professional algorithms</strong>
         </p>
     </div>
     """, unsafe_allow_html=True)
     
     if st.session_state.uploaded_file is None:
-        st.info("👆 Upload an image in the sidebar to begin analysis.")
+        st.warning("⚠️ **No file uploaded.** Please upload an image in the sidebar to begin analysis.")
         return
     
     uploaded = st.session_state.uploaded_file
@@ -739,11 +789,17 @@ def render_analyze_page():
 
 def render_hide_page():
     """Render the Hide (Embed) page."""
-    st.markdown("# 📝 Hide Data")
-    st.markdown("Embed secret messages or files using various steganography methods.")
+    st.markdown("""
+    <div style="margin-bottom: 2rem;">
+        <h1 style="margin: 0; font-size: 3.5rem; font-weight: 800;">📝 Hide Data</h1>
+        <p style="font-size: 1.4rem; color: #e2e8f0; margin: 0.75rem 0 0 0; line-height: 1.6;">
+            Embed secret messages using <strong style="color: #00d4aa;">6 steganography methods</strong>
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
     
     if st.session_state.uploaded_file is None:
-        st.info("👆 Upload a cover image in the sidebar to begin.")
+        st.warning("⚠️ **No file uploaded.** Please upload a cover image in the sidebar to begin embedding.")
         return
     
     uploaded = st.session_state.uploaded_file
@@ -915,11 +971,17 @@ def render_hide_page():
 
 def render_extract_page():
     """Render the Extract page."""
-    st.markdown("# 🔓 Extract Data")
-    st.markdown("Recover hidden messages from stego files.")
+    st.markdown("""
+    <div style="margin-bottom: 2rem;">
+        <h1 style="margin: 0; font-size: 3.5rem; font-weight: 800;">🔓 Extract Data</h1>
+        <p style="font-size: 1.4rem; color: #e2e8f0; margin: 0.75rem 0 0 0; line-height: 1.6;">
+            Recover hidden messages with <strong style="color: #00d4aa;">auto-detection</strong> support
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
     
     if st.session_state.uploaded_file is None:
-        st.info("👆 Upload a suspected stego file in the sidebar.")
+        st.warning("⚠️ **No file uploaded.** Please upload a suspected stego file in the sidebar to begin extraction.")
         return
     
     uploaded = st.session_state.uploaded_file
@@ -1031,11 +1093,17 @@ def render_extract_page():
 
 def render_bit_planes_page():
     """Render the Bit Planes page."""
-    st.markdown("# 🔬 Bit Plane Analysis")
-    st.markdown("Visualize individual bit planes to identify steganography.")
+    st.markdown("""
+    <div style="margin-bottom: 2rem;">
+        <h1 style="margin: 0; font-size: 3.5rem; font-weight: 800;">🔬 Bit Plane Analysis</h1>
+        <p style="font-size: 1.4rem; color: #e2e8f0; margin: 0.75rem 0 0 0; line-height: 1.6;">
+            Visualize <strong style="color: #00d4aa;">24 bit planes</strong> to identify steganography
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
     
     if st.session_state.uploaded_file is None:
-        st.info("👆 Upload an image in the sidebar to view bit planes.")
+        st.warning("⚠️ **No file uploaded.** Please upload an image in the sidebar to view bit planes.")
         return
     
     uploaded = st.session_state.uploaded_file
@@ -1107,7 +1175,14 @@ def render_bit_planes_page():
 
 def render_about_page():
     """Render the About page."""
-    st.markdown("# ℹ️ About ShadowLens")
+    st.markdown("""
+    <div style="margin-bottom: 2rem;">
+        <h1 style="margin: 0; font-size: 3.5rem; font-weight: 800;">ℹ️ About ShadowLens</h1>
+        <p style="font-size: 1.4rem; color: #e2e8f0; margin: 0.75rem 0 0 0; line-height: 1.6;">
+            Professional-grade <strong style="color: #00d4aa;">steganography suite</strong> for security research
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
     
     st.markdown("""
     ## 🔍 ShadowLens — Advanced Steganography Analysis Suite
