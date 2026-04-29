@@ -22,124 +22,371 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS for dark theme
+# Custom CSS for modern dark theme
 st.markdown("""
 <style>
-    /* Main theme colors */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+    
+    /* Modern Color Palette - Cyberpunk/Dark Professional */
     :root {
-        --bg-primary: #0d1117;
-        --bg-secondary: #161b22;
-        --bg-tertiary: #21262d;
-        --accent: #00ff88;
-        --text-primary: #c9d1d9;
-        --text-secondary: #8b949e;
-        --success: #00ff88;
-        --warning: #ffd700;
-        --danger: #ff4444;
+        --bg-primary: #0a0e1a;
+        --bg-secondary: #111827;
+        --bg-tertiary: #1f2937;
+        --bg-card: #161b2e;
+        --accent-primary: #00d4aa;
+        --accent-secondary: #06b6d4;
+        --accent-glow: rgba(0, 212, 170, 0.3);
+        --text-primary: #f1f5f9;
+        --text-secondary: #94a3b8;
+        --text-muted: #64748b;
+        --success: #10b981;
+        --warning: #f59e0b;
+        --danger: #ef4444;
+        --info: #3b82f6;
+        --border: #2d3748;
+        --gradient-1: linear-gradient(135deg, #00d4aa 0%, #06b6d4 100%);
+        --gradient-2: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     }
     
-    /* Override Streamlit defaults */
+    /* Global Reset */
     .stApp {
-        background-color: var(--bg-primary);
+        background: var(--bg-primary);
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
     
-    .css-1d391kg, .css-1lcbmhc {
-        background-color: var(--bg-secondary);
+    /* Main content area */
+    .main .block-container {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+        max-width: 1400px;
     }
     
-    /* Headers */
-    h1, h2, h3 {
-        color: var(--accent) !important;
-        font-family: 'Courier New', monospace !important;
+    /* Typography - Bigger and bolder */
+    h1 {
+        font-family: 'Inter', sans-serif !important;
+        font-size: 3rem !important;
+        font-weight: 700 !important;
+        background: var(--gradient-1) !important;
+        -webkit-background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
+        background-clip: text !important;
+        margin-bottom: 1rem !important;
+        letter-spacing: -0.02em !important;
     }
     
-    /* Sidebar */
-    .css-1cypcdb {
-        background-color: var(--bg-secondary);
+    h2 {
+        font-family: 'Inter', sans-serif !important;
+        font-size: 2rem !important;
+        font-weight: 600 !important;
+        color: var(--text-primary) !important;
+        margin-top: 2rem !important;
+        margin-bottom: 1rem !important;
+        border-left: 4px solid var(--accent-primary);
+        padding-left: 1rem;
     }
     
-    /* Buttons */
+    h3 {
+        font-family: 'Inter', sans-serif !important;
+        font-size: 1.5rem !important;
+        font-weight: 600 !important;
+        color: var(--accent-secondary) !important;
+        margin-top: 1.5rem !important;
+    }
+    
+    p, li {
+        font-size: 1.05rem !important;
+        line-height: 1.7 !important;
+        color: var(--text-secondary);
+    }
+    
+    /* Sidebar - Modern Glassmorphism */
+    [data-testid="stSidebar"] {
+        background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+        border-right: 1px solid var(--border);
+    }
+    
+    [data-testid="stSidebar"] > div:first-child {
+        padding-top: 2rem;
+    }
+    
+    /* Sidebar Title */
+    .sidebar-title {
+        font-size: 2rem;
+        font-weight: 700;
+        background: var(--gradient-1);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-align: center;
+        margin-bottom: 0.5rem;
+    }
+    
+    /* Navigation Radio - Bigger */
+    .stRadio > label {
+        font-size: 1.1rem !important;
+        font-weight: 500 !important;
+        padding: 0.75rem 1rem !important;
+        margin: 0.25rem 0 !important;
+        border-radius: 12px !important;
+        transition: all 0.2s ease !important;
+    }
+    
+    .stRadio > div[role="radiogroup"] > label {
+        background: var(--bg-tertiary) !important;
+        border: 2px solid transparent !important;
+    }
+    
+    .stRadio > div[role="radiogroup"] > label:hover {
+        background: var(--bg-card) !important;
+        border-color: var(--accent-primary) !important;
+        transform: translateX(4px);
+    }
+    
+    /* Buttons - Modern and bigger */
     .stButton > button {
-        background-color: var(--bg-tertiary);
-        color: var(--accent);
-        border: 1px solid var(--accent);
-        border-radius: 5px;
-        font-family: 'Courier New', monospace;
+        background: var(--gradient-1) !important;
+        color: white !important;
+        font-family: 'Inter', sans-serif !important;
+        font-size: 1.1rem !important;
+        font-weight: 600 !important;
+        padding: 0.875rem 2rem !important;
+        border-radius: 12px !important;
+        border: none !important;
+        box-shadow: 0 4px 15px var(--accent-glow) !important;
+        transition: all 0.3s ease !important;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
     
     .stButton > button:hover {
-        background-color: var(--accent);
-        color: var(--bg-primary);
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 25px var(--accent-glow) !important;
+        filter: brightness(1.1) !important;
     }
     
-    /* File uploader */
+    .stButton > button:active {
+        transform: translateY(0) !important;
+    }
+    
+    /* Secondary buttons */
+    .stButton > button[kind="secondary"] {
+        background: transparent !important;
+        border: 2px solid var(--accent-primary) !important;
+        color: var(--accent-primary) !important;
+        box-shadow: none !important;
+    }
+    
+    /* File uploader - Modern styling */
     .stFileUploader {
-        background-color: var(--bg-secondary);
-        border: 2px dashed var(--accent);
-        border-radius: 10px;
+        background: var(--bg-tertiary) !important;
+        border: 2px dashed var(--accent-secondary) !important;
+        border-radius: 16px !important;
+        padding: 2rem !important;
+        transition: all 0.3s ease !important;
     }
     
-    /* Cards */
-    .metric-card {
-        background: var(--bg-secondary);
-        border: 1px solid var(--bg-tertiary);
-        border-radius: 8px;
-        padding: 15px;
-        margin: 10px 0;
+    .stFileUploader:hover {
+        border-color: var(--accent-primary) !important;
+        background: var(--bg-card) !important;
+        box-shadow: 0 0 30px var(--accent-glow) !important;
     }
     
-    .metric-value {
-        font-size: 2em;
-        font-weight: bold;
-        color: var(--accent);
+    /* Input fields - Bigger */
+    .stTextInput > div > div > input,
+    .stTextArea > div > div > textarea {
+        background: var(--bg-tertiary) !important;
+        border: 2px solid var(--border) !important;
+        border-radius: 10px !important;
+        font-size: 1.1rem !important;
+        padding: 0.75rem 1rem !important;
+        color: var(--text-primary) !important;
     }
     
-    .metric-label {
-        color: var(--text-secondary);
-        font-size: 0.9em;
+    .stTextInput > div > div > input:focus,
+    .stTextArea > div > div > textarea:focus {
+        border-color: var(--accent-primary) !important;
+        box-shadow: 0 0 0 3px var(--accent-glow) !important;
     }
     
-    /* Status banners */
+    /* Selectbox - Bigger */
+    .stSelectbox > div > div > div {
+        background: var(--bg-tertiary) !important;
+        border: 2px solid var(--border) !important;
+        border-radius: 10px !important;
+        font-size: 1.1rem !important;
+    }
+    
+    /* Metric cards - Glassmorphism style */
+    [data-testid="stMetric"] {
+        background: linear-gradient(135deg, rgba(31, 41, 55, 0.8) 0%, rgba(17, 24, 39, 0.9) 100%);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 1.5rem;
+        backdrop-filter: blur(10px);
+    }
+    
+    [data-testid="stMetric"] > div:first-child {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 500;
+    }
+    
+    [data-testid="stMetric"] > div:last-child {
+        font-size: 2.5rem;
+        font-weight: 700;
+        background: var(--gradient-1);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    
+    /* Status banners - Enhanced with icons and gradients */
     .status-clean {
-        background: linear-gradient(90deg, #00ff8820, #00ff8840);
-        border-left: 4px solid var(--success);
-        padding: 20px;
-        border-radius: 5px;
+        background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0.05) 100%);
+        border: 2px solid var(--success);
+        border-radius: 16px;
+        padding: 1.5rem;
+        box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
     }
     
     .status-suspicious {
-        background: linear-gradient(90deg, #ffd70020, #ffd70040);
-        border-left: 4px solid var(--warning);
-        padding: 20px;
-        border-radius: 5px;
+        background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(245, 158, 11, 0.05) 100%);
+        border: 2px solid var(--warning);
+        border-radius: 16px;
+        padding: 1.5rem;
+        box-shadow: 0 0 20px rgba(245, 158, 11, 0.2);
     }
     
     .status-danger {
-        background: linear-gradient(90deg, #ff444420, #ff444440);
-        border-left: 4px solid var(--danger);
-        padding: 20px;
-        border-radius: 5px;
+        background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(239, 68, 68, 0.05) 100%);
+        border: 2px solid var(--danger);
+        border-radius: 16px;
+        padding: 1.5rem;
+        box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
     }
     
-    /* Code blocks */
+    /* Code blocks - Modern terminal style */
     code {
-        background-color: var(--bg-tertiary);
-        color: var(--accent);
-        padding: 2px 6px;
-        border-radius: 3px;
-        font-family: 'Courier New', monospace;
+        background: var(--bg-tertiary) !important;
+        color: var(--accent-primary) !important;
+        padding: 0.25rem 0.5rem !important;
+        border-radius: 6px !important;
+        font-family: 'JetBrains Mono', 'Fira Code', monospace !important;
+        font-size: 0.95rem !important;
+        border: 1px solid var(--border);
     }
     
-    /* Expanders */
+    pre code {
+        display: block;
+        padding: 1rem !important;
+        overflow-x: auto;
+    }
+    
+    /* Expanders - Modern cards */
     .streamlit-expander {
-        border: 1px solid var(--bg-tertiary);
-        border-radius: 5px;
-        background: var(--bg-secondary);
+        background: var(--bg-card) !important;
+        border: 1px solid var(--border) !important;
+        border-radius: 12px !important;
+        overflow: hidden;
     }
     
-    /* Progress bars */
+    .streamlit-expanderHeader {
+        font-size: 1.1rem !important;
+        font-weight: 600 !important;
+        padding: 1rem 1.25rem !important;
+        background: var(--bg-tertiary) !important;
+        color: var(--text-primary) !important;
+    }
+    
+    /* Progress bars - Animated gradient */
     .stProgress > div > div {
-        background-color: var(--accent);
+        background: var(--gradient-1) !important;
+        border-radius: 10px;
+        transition: width 0.5s ease;
+    }
+    
+    /* Dividers */
+    hr {
+        border: none;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--border), transparent);
+        margin: 2rem 0;
+    }
+    
+    /* Info boxes */
+    .stInfo, .stWarning, .stError, .stSuccess {
+        border-radius: 12px !important;
+        padding: 1rem 1.25rem !important;
+        font-size: 1.05rem !important;
+    }
+    
+    .stInfo {
+        background: rgba(59, 130, 246, 0.1) !important;
+        border: 1px solid var(--info) !important;
+    }
+    
+    /* Image containers */
+    [data-testid="stImage"] {
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Data frames / Tables */
+    .dataframe {
+        font-size: 1rem !important;
+        border-radius: 12px !important;
+        overflow: hidden;
+        border: 1px solid var(--border) !important;
+    }
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+    
+    ::-webkit-scrollbar-track {
+        background: var(--bg-primary);
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background: var(--bg-tertiary);
+        border-radius: 5px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--accent-primary);
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .main > div {
+        animation: fadeIn 0.5s ease-out;
+    }
+    
+    /* Glow effects for important elements */
+    .glow-text {
+        text-shadow: 0 0 20px var(--accent-glow);
+    }
+    
+    /* Card component style */
+    .card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 1.5rem;
+        transition: all 0.3s ease;
+    }
+    
+    .card:hover {
+        border-color: var(--accent-primary);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
     }
 </style>
 """, unsafe_allow_html=True)
@@ -171,15 +418,44 @@ def init_session_state():
 def render_sidebar():
     """Render the sidebar with navigation and file upload."""
     st.sidebar.markdown("""
-    <div style="text-align: center; padding: 20px 0;">
-        <h1 style="color: #00ff88; font-size: 1.8em; margin-bottom: 5px;">🔍 ShadowLens</h1>
-        <p style="color: #8b949e; font-size: 0.9em;">Steganography Suite</p>
+    <div style="text-align: center; padding: 2rem 1rem 1.5rem; margin-bottom: 1rem;">
+        <div style="font-size: 3.5rem; margin-bottom: 0.5rem; filter: drop-shadow(0 0 15px rgba(0, 212, 170, 0.5));">🔍</div>
+        <h1 style="
+            font-family: 'Inter', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00d4aa 0%, #06b6d4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 0 0 0.5rem 0;
+            letter-spacing: -0.02em;
+        ">ShadowLens</h1>
+        <p style="color: #64748b; font-size: 1rem; font-weight: 500; margin: 0;">
+            Steganography Suite
+        </p>
+        <div style="
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background: rgba(0, 212, 170, 0.1);
+            border: 1px solid rgba(0, 212, 170, 0.3);
+            border-radius: 20px;
+            display: inline-block;
+        ">
+            <span style="color: #00d4aa; font-size: 0.85rem; font-weight: 600;">v1.0</span>
+        </div>
+    </div>
+    
+    <hr style="border: none; height: 1px; background: linear-gradient(90deg, transparent, #2d3748, transparent); margin: 1rem 0;">
+    
+    <div style="padding: 0 0.5rem;">
+        <p style="color: #64748b; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; margin: 0 0 1rem 1rem;">Navigation</p>
     </div>
     """, unsafe_allow_html=True)
     
     # Navigation
     page = st.sidebar.radio(
-        "Navigation",
+        "",
         ["📊 Analyze", "📝 Hide", "🔓 Extract", "🔬 Bit Planes", "ℹ️ About"],
         label_visibility="collapsed"
     )
@@ -188,46 +464,88 @@ def render_sidebar():
     
     # File uploader (common across most pages)
     if page != "ℹ️ About":
-        st.sidebar.markdown("### 📁 File Upload")
+        st.sidebar.markdown("""
+        <div style="padding: 0 0.5rem; margin-bottom: 1rem;">
+            <p style="color: #64748b; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; margin: 0 0 1rem 0.5rem;">
+                📁 File Upload
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
         
         accepted_types = ['png', 'bmp', 'tiff', 'tif', 'jpg', 'jpeg', 'wav', 'txt']
         uploaded = st.sidebar.file_uploader(
-            "Drop file here",
+            "📂 Drop file or click to browse",
             type=accepted_types,
-            help="Supported: PNG, BMP, TIFF, JPG, WAV, TXT"
+            help="Supports: PNG, BMP, TIFF, JPG, WAV, TXT"
         )
         
         if uploaded:
             st.session_state.uploaded_file = uploaded
             
-            # Show file info
-            st.sidebar.markdown("#### File Information")
-            st.sidebar.markdown(f"**Name:** `{uploaded.name}`")
-            st.sidebar.markdown(f"**Size:** `{format_bytes_readable(len(uploaded.getvalue()))}`")
+            # Show file info in modern card style
+            st.sidebar.markdown("""
+            <div style="
+                background: linear-gradient(135deg, rgba(31, 41, 55, 0.8) 0%, rgba(17, 24, 39, 0.9) 100%);
+                border: 1px solid #2d3748;
+                border-radius: 12px;
+                padding: 1rem;
+                margin: 0.5rem 0;
+            ">
+                <p style="color: #64748b; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 0.75rem 0;">📊 File Information</p>
+            """, unsafe_allow_html=True)
             
-            # Calculate hash
-            file_hash = calculate_file_hash(io.BytesIO(uploaded.getvalue()))
-            st.sidebar.markdown(f"**MD5:** `{file_hash[:16]}...`")
+            st.sidebar.markdown(f"<p style='margin: 0.25rem 0; font-size: 0.9rem;'><span style='color: #94a3b8;'>Name:</span> <code style='font-size: 0.8rem;'>{uploaded.name}</code></p>", unsafe_allow_html=True)
+            st.sidebar.markdown(f"<p style='margin: 0.25rem 0; font-size: 0.9rem;'><span style='color: #94a3b8;'>Size:</span> <span style='color: #00d4aa; font-weight: 600;'>{format_bytes_readable(len(uploaded.getvalue()))}</span></p>", unsafe_allow_html=True)
+            
+            # Calculate hash - save to temp file first
+            import tempfile
+            with tempfile.NamedTemporaryFile(delete=False, suffix=Path(uploaded.name).suffix) as tmp:
+                tmp.write(uploaded.getvalue())
+                tmp_path = Path(tmp.name)
+            file_hash = calculate_file_hash(tmp_path)
+            st.sidebar.markdown(f"<p style='margin: 0.25rem 0; font-size: 0.9rem;'><span style='color: #94a3b8;'>MD5:</span> <code style='font-size: 0.75rem;'>{file_hash[:16]}...</code></p>", unsafe_allow_html=True)
+            # Clean up temp file
+            try:
+                tmp_path.unlink()
+            except:
+                pass
             
             # Image-specific info
             if uploaded.name.lower().endswith(('.png', '.bmp', '.tiff', '.tif', '.jpg', '.jpeg')):
                 try:
                     img = Image.open(io.BytesIO(uploaded.getvalue()))
-                    st.sidebar.markdown(f"**Dimensions:** `{img.size[0]} × {img.size[1]}`")
-                    st.sidebar.markdown(f"**Mode:** `{img.mode}`")
+                    st.sidebar.markdown(f"<p style='margin: 0.25rem 0; font-size: 0.9rem;'><span style='color: #94a3b8;'>Dimensions:</span> <span style='color: #f1f5f9;'>{img.size[0]} × {img.size[1]}</span></p>", unsafe_allow_html=True)
+                    st.sidebar.markdown(f"<p style='margin: 0.25rem 0; font-size: 0.9rem;'><span style='color: #94a3b8;'>Mode:</span> <span style='color: #f1f5f9;'>{img.mode}</span></p>", unsafe_allow_html=True)
                 except Exception:
                     pass
+            
+            st.sidebar.markdown("</div>", unsafe_allow_html=True)
     
     st.sidebar.markdown("---")
-    st.sidebar.markdown("<p style='text-align: center; color: #8b949e; font-size: 0.8em;'>ShadowLens v1.0</p>", unsafe_allow_html=True)
+    st.sidebar.markdown("""
+    <div style="text-align: center; padding: 1rem; margin-top: 1rem;">
+        <p style="color: #475569; font-size: 0.8rem; font-weight: 500; margin: 0;">
+            <span style="color: #00d4aa;">●</span> ShadowLens v1.0
+        </p>
+        <p style="color: #334155; font-size: 0.7rem; margin: 0.25rem 0 0 0;">
+            Advanced Steganography Suite
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
     
     return page
 
 
 def render_analyze_page():
     """Render the Analyze page."""
-    st.markdown("# 📊 Steganalysis")
-    st.markdown("Detect and analyze hidden data in images using multiple algorithms.")
+    st.markdown("""
+    <div style="margin-bottom: 2rem;">
+        <h1 style="margin: 0; font-size: 3rem;">📊 Steganalysis</h1>
+        <p style="font-size: 1.25rem; color: #94a3b8; margin: 0.5rem 0 0 0; line-height: 1.6;">
+            Detect and analyze hidden data using <strong style="color: #00d4aa;">9 professional algorithms</strong>
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
     
     if st.session_state.uploaded_file is None:
         st.info("👆 Upload an image in the sidebar to begin analysis.")
