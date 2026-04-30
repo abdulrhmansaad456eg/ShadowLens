@@ -1,4 +1,4 @@
-# 🔍 ShadowLens
+#  ShadowLens
 
 [![Python](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
@@ -13,7 +13,7 @@ ShadowLens is a professional-grade steganography tool designed for cybersecurity
 
 ---
 
-## ✨ Features
+##  Features
 
 ### 🔬 Detection Algorithms (9 Methods)
 
@@ -29,19 +29,19 @@ ShadowLens is a professional-grade steganography tool designed for cybersecurity
 | **Metadata Analysis** | EXIF inspection and anomaly detection | File structure analysis |
 | **Combined Scoring** | Weighted aggregation with confidence verdict | Multi-factor analysis |
 
-### 🔒 Embedding Methods (6 Methods)
+###  Embedding Methods (6 Methods)
 
-- ✅ **LSB Steganography** — 1-3 bits per channel, channel selection
-- ✅ **Encrypted LSB** — AES-256-GCM + PBKDF2 password protection
-- ✅ **Spread Spectrum** — PRNG-seeded distributed embedding
-- ✅ **Audio LSB** — WAV file steganography (mono/stereo)
-- ✅ **Text Zero-Width** — Invisible character encoding
-- ✅ **Text Whitespace** — Trailing space/tab encoding
-- ✅ **Alpha Channel** — Hide images in PNG transparency
+-  **LSB Steganography** — 1-3 bits per channel, channel selection
+-  **Encrypted LSB** — AES-256-GCM + PBKDF2 password protection
+-  **Spread Spectrum** — PRNG-seeded distributed embedding
+-  **Audio LSB** — WAV file steganography (mono/stereo)
+-  **Text Zero-Width** — Invisible character encoding
+-  **Text Whitespace** — Trailing space/tab encoding
+-  **Alpha Channel** — Hide images in PNG transparency
 
 ---
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### Installation
 
@@ -70,7 +70,7 @@ streamlit run app.py
 
 ---
 
-## 📖 Usage Guide
+##  Usage Guide
 
 ### Page 1: Analyze (Detection)
 
@@ -83,9 +83,9 @@ Upload any image to run comprehensive steganalysis:
 5. Download HTML report for documentation
 
 **Verdict System:**
-- 🟢 **CLEAN** — No steganographic indicators detected
-- 🟡 **SUSPICIOUS** — Some anomalies warrant further investigation
-- 🔴 **LIKELY EMBEDDED** — Strong evidence of hidden data
+-  **CLEAN** — No steganographic indicators detected
+-  **SUSPICIOUS** — Some anomalies warrant further investigation
+-  **LIKELY EMBEDDED** — Strong evidence of hidden data
 
 ### Page 2: Hide (Embedding)
 
@@ -104,7 +104,7 @@ Embed secret messages in images:
 
 Extract hidden data from suspected stego files:
 
-1. Navigate to **🔓 Extract** page
+1. Navigate to ** Extract ** page
 2. Upload stego file
 3. Select method or use auto-detect
 4. Enter password if encrypted
@@ -173,7 +173,7 @@ Embedding rate estimated from |P - Q| / (|P| + |Q|)
 
 ---
 
-## 🏗️ Architecture
+##  Architecture
 
 ```
 ShadowLens/
@@ -197,29 +197,29 @@ ShadowLens/
 
 ---
 
-## 📊 Sample Output
+##  Sample Output
 
 ### Analysis Report Example
 
 ```
 ═══════════════════════════════════════════
-🔍 ShadowLens Analysis Report
+ ShadowLens Analysis Report
 test_image.png | 2.4 MB | 1920×1080
 ═══════════════════════════════════════════
 
-🟡 VERDICT: SUSPICIOUS (Confidence: 73.2%)
+ VERDICT: SUSPICIOUS (Confidence: 73.2%)
 
 Overall Suspicion Score: 68.5%
 
 ┌─ Detection Results ─────────────────────┐
-│ LSB Analysis:        🟡 78.3% suspicious│
-│ Chi-Square:           🟢 12.1%          │
-│ RS Analysis:          🟡 45.7% payload │
-│ Sample Pairs:         🟡 38.2% rate     │
-│ Histogram:            🟢 23.4%          │
-│ Noise Estimation:     🟢 15.6%          │
-│ DCT Analysis:         ⚪ N/A (PNG)      │
-│ Metadata:             🟢 Clean          │
+│ LSB Analysis:         78.3% suspicious│
+│ Chi-Square:            12.1%          │
+│ RS Analysis:           45.7% payload │
+│ Sample Pairs:          38.2% rate     │
+│ Histogram:             23.4%          │
+│ Noise Estimation:      15.6%          │
+│ DCT Analysis:          N/A (PNG)      │
+│ Metadata:              Clean          │
 └─────────────────────────────────────────┘
 
 Estimated Payload: ~12.3% of image capacity
@@ -228,27 +228,27 @@ Recommendation: Further investigation warranted
 
 ---
 
-## ⚖️ Ethical Use Statement
+##  Ethical Use Statement
 
 ShadowLens is designed for legitimate security purposes:
 
-- ✅ Security research and education
-- ✅ Digital forensics investigations
-- ✅ Penetration testing (authorized)
-- ✅ Steganography algorithm development
-- ✅ Academic research
+-  Security research and education
+-  Digital forensics investigations
+-  Penetration testing (authorized)
+-  Steganography algorithm development
+-  Academic research
 
 **Prohibited uses:**
-- ❌ Concealing illegal content
-- ❌ Bypassing security without authorization
-- ❌ Malicious data exfiltration
-- ❌ Copyright circumvention
+-  Concealing illegal content
+-  Bypassing security without authorization
+-  Malicious data exfiltration
+-  Copyright circumvention
 
 Users are responsible for complying with all applicable laws. The developers assume no liability for misuse.
 
 ---
 
-## 📚 References
+##  References
 
 1. **Westfeld, A., & Pfitzmann, A.** (1999). Attacks on Steganographic Systems. In *Information Hiding* (LNCS 1768, pp. 61-76). Springer.
 
@@ -262,7 +262,7 @@ Users are responsible for complying with all applicable laws. The developers ass
 
 ---
 
-## 🤝 Contributing
+##  Contributing
 
 Contributions welcome! Areas of interest:
 
@@ -280,7 +280,7 @@ Please submit pull requests with:
 
 ---
 
-## 📄 License
+##  License
 
 MIT License
 
@@ -302,7 +302,7 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 
 ---
 
-## 🙏 Acknowledgments
+##  Acknowledgments
 
 - OpenCV and scikit-image communities for image processing tools
 - Plotly team for interactive visualization
@@ -312,6 +312,6 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 ---
 
 <p align="center">
-  <strong>🔍 ShadowLens — See What Others Hide</strong><br>
-  <sub>Built with 💚 for the cybersecurity community</sub>
+  <strong> ShadowLens — See What Others Hide</strong><br>
+  <sub>Built with Love for the cybersecurity community</sub>
 </p>
