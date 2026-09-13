@@ -7,7 +7,7 @@
 
 > **Advanced Steganography Analysis & Detection Suite**
 
-ShadowLens is a professional-grade steganography tool designed for cybersecurity researchers, digital forensics specialists, and security professionals. It combines 9 detection algorithms with 6 embedding methods in a sleek, intuitive interface.
+ShadowLens is a steganography analysis tool for cybersecurity researchers and digital forensics work. It combines 9 detection algorithms with 6 embedding methods in a Streamlit interface.
 
 ![ShadowLens Banner](assets/banner.png)
 
@@ -35,8 +35,7 @@ ShadowLens is a professional-grade steganography tool designed for cybersecurity
 -  **Encrypted LSB** — AES-256-GCM + PBKDF2 password protection
 -  **Spread Spectrum** — PRNG-seeded distributed embedding
 -  **Audio LSB** — WAV file steganography (mono/stereo)
--  **Text Zero-Width** — Invisible character encoding
--  **Text Whitespace** — Trailing space/tab encoding
+-  **Text Encoding** — invisible zero-width characters or trailing space/tab encoding
 -  **Alpha Channel** — Hide images in PNG transparency
 
 ---
@@ -47,7 +46,7 @@ ShadowLens is a professional-grade steganography tool designed for cybersecurity
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/ShadowLens.git
+git clone https://github.com/abdulrhmansaad456eg/ShadowLens.git
 cd ShadowLens
 
 # Install dependencies
