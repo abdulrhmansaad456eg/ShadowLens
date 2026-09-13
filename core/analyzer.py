@@ -30,6 +30,22 @@ class Steganalyzer:
     def __init__(self):
         """Initialize the steganalyzer."""
         self.results = {}
+
+    @staticmethod
+    def _sanitize(obj):
+        """Recursively convert numpy scalars to plain Python types."""
+        if isinstance(obj, dict):
+            return {k: Steganalyzer._sanitize(v) for k, v in obj.items()}
+        if isinstance(obj, (list, tuple)):
+            return [Steganalyzer._sanitize(v) for v in obj]
+        if isinstance(obj, np.bool_):
+            return bool(obj)
+        if isinstance(obj, np.integer):
+            return int(obj)
+        if isinstance(obj, np.floating):
+            return float(obj)
+        return obj
+
         
     def analyze(self, filepath: Path, verbose: bool = False) -> Dict:
         """
@@ -70,8 +86,8 @@ class Steganalyzer:
         # Calculate combined score
         self.results['combined_score'] = self._calculate_combined_score()
         self.results['verdict'] = self._get_verdict(self.results['combined_score'])
-        
-        return self.results
+
+        return self._sanitize(self.results)
     
     def _analyze_lsb(self, img_array: np.ndarray) -> Dict:
         """
@@ -128,7 +144,7 @@ class Steganalyzer:
         return {
             'channels': lsb_results,
             'overall_suspicion': float(lsb_suspicion),
-            'detected': lsb_suspicion > 0.7
+            'detected': bool(lsb_suspicion > 0.7)
         }
     
     def _chi_square_attack(self, img_array: np.ndarray) -> Dict:
@@ -196,7 +212,7 @@ class Steganalyzer:
             'channels': results,
             'overall_confidence': float(max_confidence),
             'suspicious_channels': suspicious_channels,
-            'detected': suspicious_channels >= 2 or max_confidence > 0.8
+            'detected': bool(suspicious_channels >= 2 or max_confidence > 0.8)
         }
     
     def _rs_analysis(self, img_array: np.ndarray) -> Dict:
@@ -212,7 +228,7 @@ class Steganalyzer:
         results = {}
         
         for i, ch_name in enumerate(channels):
-            channel = img_array[:, :, i]
+            channel = img_array[:, :, i].astype(np.int32)
             
             # Reshape into groups of 4 consecutive pixels
             h, w = channel.shape
@@ -297,7 +313,7 @@ class Steganalyzer:
         return {
             'channels': results,
             'estimated_payload_percent': float(avg_payload),
-            'detected': avg_payload > 3.0
+            'detected': bool(avg_payload > 3.0)
         }
     
     def _sample_pairs_analysis(self, img_array: np.ndarray) -> Dict:
@@ -388,7 +404,7 @@ class Steganalyzer:
         return {
             'channels': results,
             'estimated_embedding_rate': float(avg_rate),
-            'detected': avg_rate > 0.03
+            'detected': bool(avg_rate > 0.03)
         }
     
     def _histogram_analysis(self, img_array: np.ndarray) -> Dict:
@@ -438,7 +454,7 @@ class Steganalyzer:
             'histogram_data': {ch: img_array[:, :, i].flatten().tolist() 
                               for i, ch in enumerate(channels)},
             'overall_flatness': float(avg_flatness),
-            'detected': avg_flatness > 0.6
+            'detected': bool(avg_flatness > 0.6)
         }
     
     def _noise_analysis(self, img_array: np.ndarray) -> Dict:
@@ -469,7 +485,7 @@ class Steganalyzer:
         
         # Suspicious if noise is significantly above baseline
         baseline = 100.0  # Typical natural image baseline
-        suspicious = avg_noise > baseline * 2  # Double baseline is suspicious
+        suspicious = bool(avg_noise > baseline * 2)  # Double baseline is suspicious
         
         return {
             'channel_noise_levels': [float(n) for n in noise_levels],
@@ -540,7 +556,7 @@ class Steganalyzer:
             peak_ratio = 1.0
         
         # Suspicious if the histogram looks modified
-        suspicious = hist_variance < 1000 or peak_ratio < 2.0
+        suspicious = bool(hist_variance < 1000 or peak_ratio < 2.0)
         
         return {
             'applicable': True,
